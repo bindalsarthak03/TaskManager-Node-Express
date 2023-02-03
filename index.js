@@ -1,8 +1,12 @@
 const express = require('express');
 const app = express();
 const taskRouter = require('./routes/tasks')
+require('./db/connect')
 //middleware
 app.use(express.json());
+
+//nQavSYSU5z2n41x0
+
 
 //Routes
 app.get('/hello',(req,res,next)=>{
@@ -18,4 +22,4 @@ app.use('/api/v1/tasks',taskRouter);
 //api.delete('api/v1/tasks/:id') //delete a task
 
 
-app.listen(5000,()=>{console.log("Server is up and running at 5000...")})
+app.listen(5000,()=>{console.log("SERVER RUNNING AT 5000...")})
