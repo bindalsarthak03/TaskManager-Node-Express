@@ -1,7 +1,8 @@
 const express = require('express');
 const app = express();
 const taskRouter = require('./routes/tasks')
-require('./db/connect')
+const connectDB = require('./db/connect')
+require('dotenv').config()
 //middleware
 app.use(express.json());
 
@@ -15,11 +16,13 @@ app.get('/hello',(req,res,next)=>{
 
 app.use('/api/v1/tasks',taskRouter);
 
-//app.get('/api/v1/tasks') //get all tasks
-//app.post('/api/v1/tasks') //post a task
-//app.get('api/v1/tasks/:id') //get a task
-//api.patch('api/v1/tasks/:id') //update a task
-//api.delete('api/v1/tasks/:id') //delete a task
+const start  = async ()=>{
+    try {
+        await connectDB(process.env.MONGO_URL)
+        app.listen(process.env.PORT,()=>{console.log(`SERVER RUNNING AT ${process.env.PORT}....`)})
+    } catch (error) {
+        console.log(error)
+    }
+}
 
-
-app.listen(5000,()=>{console.log("SERVER RUNNING AT 5000...")})
+start();
